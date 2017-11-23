@@ -30,7 +30,7 @@ if((!empty($arParams["ID_CATEGORTY"])) &&
 		ShowError(GetMessage("IBLOCK_MODULE_NOT_INSTALLED"));
 		return;
 	}
-	if ($this->StartResultCache())
+	if ($this->StartResultCache(false))
 {
 	$Razdels = [];
 	$arResult = [];
