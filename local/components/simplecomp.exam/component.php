@@ -30,6 +30,8 @@ if((!empty($arParams["ID_CATEGORTY"])) &&
 		ShowError(GetMessage("IBLOCK_MODULE_NOT_INSTALLED"));
 		return;
 	}
+	if ($this->StartResultCache())
+{
 	$Razdels = [];
 	$arResult = [];
 	$count =0;
@@ -52,7 +54,8 @@ if((!empty($arParams["ID_CATEGORTY"])) &&
 			}
 		}
 	}
-
+	
+	$arResult['COUNT'] = $count;
 	$arSelect = Array("ID","NAME","ACTIVE_FROM");
 	$arFilter = Array("IBLOCK_ID"=>$arParams["ID_NEWS"],  'ACTIVE'=>'Y');
 	$News = CIBlockElement::GetList(Array(), $arFilter, false, false, $arSelect);
@@ -69,11 +72,13 @@ if((!empty($arParams["ID_CATEGORTY"])) &&
 		$i++;
 	}
 	
-	$this->SetResultCacheKeys(array());
+	$this->SetResultCacheKeys(array("ITEMS","COUNT",));
 	$this->IncludeComponentTemplate();
 	
+	
+	}
 	global $APPLICATION;
-	$APPLICATION->SetTitle("В каталоге товаров представлено товаров: ".$count);
+	$APPLICATION->SetTitle("В каталоге товаров представлено товаров: ".$arResult['COUNT']);
 }
 else
 	{
